@@ -1,15 +1,17 @@
 package Service;
 
 import Model.Message;
-import DAO.MessageDAO;
+import DAO.*;
 
 import java.util.List;
 
 public class MessageService {
   private MessageDAO messageDAO;
+  private AccountDAO accountDAO;
 
   public MessageService() {
     messageDAO = new MessageDAO();
+    accountDAO = new AccountDAO();
   }
 
   public MessageService(MessageDAO messageDAO) {
@@ -21,9 +23,7 @@ public class MessageService {
     if (msg_txt == null || msg_txt.isEmpty() || msg_txt.length() >= 255) {
       return null;
     }
-
-    if (messageDAO.getAllMessagesByAccountId(msg.getPosted_by()).size() > 0) {
-      messageDAO.insertMessage(msg);
+    if (accountDAO.getAccountById(msg.getPosted_by()) != null) {
       return messageDAO.insertMessage(msg);
     }
     return null;

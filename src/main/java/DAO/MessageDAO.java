@@ -75,6 +75,7 @@ public class MessageDAO {
     try {
       String sql = "SELECT * FROM message WHERE posted_by = ?;";
       PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setInt(1, id);
 
       ResultSet rs = ps.executeQuery();
       while (rs.next()) {
